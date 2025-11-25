@@ -1,6 +1,5 @@
 package com.marcosandre.geekconnect2.ui
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,16 +17,16 @@ import androidx.compose.ui.unit.sp
 
 @Preview(showBackground = true)
 @Composable
-fun MapPage(modifier: Modifier = Modifier) {
+fun ListsPage(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier.fillMaxSize()
-            .background(Color.Gray)
+            .background(Color.Red)
             .wrapContentSize(Alignment.Center)
 
     ) {
         Text(
-            text = "Notificacoes",
+            text = "Favoritas",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = modifier.align(CenterHorizontally),

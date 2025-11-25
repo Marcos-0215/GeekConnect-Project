@@ -16,12 +16,33 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.marcosandre.geekconnect2.ui.nav.BottomNavBar
 import com.marcosandre.geekconnect2.ui.nav.BottomNavItem
 import com.marcosandre.geekconnect2.ui.nav.MainNavHost
+import com.marcosandre.geekconnect2.ui.nav.Route
 import com.marcosandre.geekconnect2.ui.theme.GeekConnect2Theme
+
+
+@Composable
+fun getTopBarTitle(currentRoute: String?): String {
+
+    return when (currentRoute) {
+
+        // ROTAS TIPADAS (Kotlin Serialization)
+        Route.Home::class.qualifiedName -> "Home"
+        Route.Lists::class.qualifiedName -> "Listas"
+        Route.Notifications::class.qualifiedName -> "Notificações"
+        Route.Profile::class.qualifiedName -> "Perfil"
+
+        // fallback
+        else -> "GeekConnect"
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 
@@ -31,11 +52,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
+
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            val dynamicTitle = getTopBarTitle(currentRoute)
+
             GeekConnect2Theme {
                 Scaffold(
                     topBar = {
                         TopAppBar(
-                            title = { Text("Bem-vindo(a)!") },
+                            title = { Text(dynamicTitle) },
 
                             actions = {
 
@@ -53,8 +79,9 @@ class MainActivity : ComponentActivity() {
                     bottomBar = {
                         val items = listOf(
                             BottomNavItem.HomeButton,
-                            BottomNavItem.ListButton,
-                            BottomNavItem.MapButton,
+                            BottomNavItem.ListsButton,
+                            BottomNavItem.NotificationsButton,
+                            BottomNavItem.ProfileButton,
 
                             )
 
