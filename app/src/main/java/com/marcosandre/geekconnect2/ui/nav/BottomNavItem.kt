@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.serialization.Serializable // em caso de erro
 
@@ -14,7 +13,7 @@ sealed interface Route {
     @Serializable
     data object List : Route
     @Serializable
-    data object Notifications : Route
+    data object Map : Route
 }
 sealed class BottomNavItem(
     val title: String,
@@ -25,6 +24,6 @@ sealed class BottomNavItem(
         BottomNavItem("Início", Icons.Default.Home, Route.Home)
     data object ListButton :
         BottomNavItem("Favoritos", Icons.Default.Favorite, Route.List)
-    data object NotificationButton :
-        BottomNavItem("Notificações", Icons.Default.Notifications, Route.Notifications)
+    data object MapButton :
+        BottomNavItem("Mapa", Icons.Default.LocationOn, Route.Map)
 }

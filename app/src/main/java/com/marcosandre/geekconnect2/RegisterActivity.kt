@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,6 +33,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,62 +66,70 @@ fun RegisterPage(modifier: Modifier = Modifier) {
     var passwordConfirm by rememberSaveable { mutableStateOf("") }
     val activity = LocalActivity.current as Activity
 
+    val geekPurple = Color(0xFF7C4DFF)
+
     Column(
         modifier = modifier
             .padding(16.dp)
+            .background(Color(0xFF121212))
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = CenterHorizontally
     ) {
         Text(
-            text = "Registro",
-            fontSize = 24.sp
+            text = "Criar Conta",
+            fontSize = 32.sp,
+            color = Color.White
         )
-
-        Spacer(modifier = modifier.size(6.dp))
 
         Text(
-            text = "Preencha abaixo",
-            fontSize = 16.sp
+            text = "Preencha seus dados abaixo",
+            fontSize = 16.sp,
+            color = Color(0xFFBBBBBB)
         )
 
-        Spacer(modifier = modifier.size(10.dp))
+        Spacer(modifier = modifier.size(32.dp))
+
 
         OutlinedTextField(
             value = name,
-            label = { Text(text = "Digite seu nome") },
-            modifier = modifier.fillMaxWidth(fraction = 0.9f),
-            onValueChange = { name = it }
+            label = { Text("Digite seu nome", color = Color(0xFFCCCCCC)) },
+            onValueChange = { name = it },
+            textStyle = LocalTextStyle.current.copy(color = Color.White),
+            modifier = Modifier.fillMaxWidth(0.9f)
         )
 
-        Spacer(modifier = modifier.size(6.dp))
+        Spacer(modifier = modifier.size(16.dp))
 
         OutlinedTextField(
             value = email,
-            label = { Text(text = "Digite seu e-mail") },
-            modifier = modifier.fillMaxWidth(fraction = 0.9f),
-            onValueChange = { email = it }
+            label = { Text("Digite seu e-mail", color = Color(0xFFCCCCCC)) },
+            onValueChange = { email = it },
+            textStyle = LocalTextStyle.current.copy(color = Color.White),
+            modifier = Modifier.fillMaxWidth(0.9f)
         )
 
-        Spacer(modifier = modifier.size(6.dp))
+        Spacer(modifier = modifier.size(16.dp))
 
         OutlinedTextField(
             value = password,
-            label = { Text(text = "Digite sua senha") },
+            label = { Text(text = "Digite sua senha", color = Color(0xFFCCCCCC) ) },
             modifier = modifier.fillMaxWidth(fraction = 0.9f),
+            textStyle = LocalTextStyle.current.copy(color = Color.White),
             onValueChange = { password = it },
             visualTransformation = PasswordVisualTransformation()
         )
 
-        Spacer(modifier = modifier.size(6.dp))
+        Spacer(modifier = modifier.size(16.dp))
 
         OutlinedTextField(
             value = passwordConfirm,
-            label = { Text(text = "Confirme sua senha") },
-            modifier = modifier.fillMaxWidth(fraction = 0.9f),
+            label = { Text("Confirme sua senha", color = Color(0xFFCCCCCC)) },
             onValueChange = { passwordConfirm = it },
-            visualTransformation = PasswordVisualTransformation()
+            textStyle = LocalTextStyle.current.copy(color = Color.White),
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth(0.9f)
         )
 
         Spacer(modifier = modifier.size(10.dp))
@@ -134,15 +146,21 @@ fun RegisterPage(modifier: Modifier = Modifier) {
 
                 activity.finish()
             },
-                enabled = name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && (password == passwordConfirm)
+                enabled = name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && (password == passwordConfirm),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = geekPurple
+                )
             ) {
                 Text("Registrar")
             }
 
-            Spacer(modifier = modifier.size(4.dp))
+            Spacer(modifier = modifier.size(16.dp))
 
             Button(
-                onClick = { name = ""; email = ""; password = "" ; passwordConfirm = "" }
+                onClick = { name = ""; email = ""; password = "" ; passwordConfirm = "" },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF333333)
+                )
             ) {
                 Text("Limpar")
             }

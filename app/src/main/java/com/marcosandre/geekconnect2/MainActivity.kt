@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
@@ -18,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.Modifier
-import com.marcosandre.geekconnect2.ui.HomePage
 import androidx.navigation.compose.rememberNavController
 import com.marcosandre.geekconnect2.ui.nav.BottomNavBar
 import com.marcosandre.geekconnect2.ui.nav.BottomNavItem
@@ -32,6 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             GeekConnect2Theme {
                 Scaffold(
                     topBar = {
@@ -50,11 +49,12 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     },
+
                     bottomBar = {
                         val items = listOf(
                             BottomNavItem.HomeButton,
                             BottomNavItem.ListButton,
-                            BottomNavItem.NotificationButton,
+                            BottomNavItem.MapButton,
 
                             )
 
@@ -77,4 +77,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
