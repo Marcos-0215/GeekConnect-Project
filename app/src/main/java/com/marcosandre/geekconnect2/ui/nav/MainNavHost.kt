@@ -15,7 +15,7 @@ import com.marcosandre.geekconnect2.viewmodel.ListsViewModel
 fun MainNavHost(navController: NavHostController,  viewModel: ListsViewModel) {
     NavHost(navController, startDestination = Route.Home) {
         composable<Route.Home> { HomePage() }
-        composable<Route.Lists> { ListsPage(viewModel = viewModel) }
+        composable<Route.Lists> { ListsPage() }
         composable<Route.Notifications> { NotificationsPage() }
         composable<Route.Profile> { ProfilePage() }
     }
