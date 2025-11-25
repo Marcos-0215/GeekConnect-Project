@@ -1,38 +1,47 @@
 package com.marcosandre.geekconnect2.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.marcosandre.geekconnect2.viewmodel.ListsViewModel
 
-@Preview(showBackground = true)
+import com.marcosandre.geekconnect2.ui.lists.PlayingList
+import com.marcosandre.geekconnect2.ui.lists.CompletedList
+import com.marcosandre.geekconnect2.ui.lists.WishlistList
+import com.marcosandre.geekconnect2.ui.lists.FavoritesList
+
+
+
 @Composable
-fun ListsPage(modifier: Modifier = Modifier) {
+fun ListsPage(modifier: Modifier = Modifier, viewModel: ListsViewModel) {
 
-    Column(
-        modifier = modifier.fillMaxSize()
-            .background(Color.Red)
-            .wrapContentSize(Alignment.Center)
+    var selectedTab by remember { mutableStateOf(0) }
 
-    ) {
-        Text(
-            text = "Favoritas",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = modifier.align(CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
+    val tabs = listOf("Jogando", "Zerados", "Wishlist", "Favoritos")
 
+    TabRow(selectedTabIndex = selectedTab) {
+        tabs.forEachIndexed { index, title ->
+            Tab(
+                selected = selectedTab == index,
+                onClick = { selectedTab = index },
+                text = { Text(title) }
+            )
+        }
+    }
+
+    when (selectedTab) {
+        0 -> PlayingList(viewModel)
+        1 -> CompletedList(viewModel)
+        2 -> WishlistList(viewModel)
+        3 -> FavoritesList(viewModel)
     }
 }

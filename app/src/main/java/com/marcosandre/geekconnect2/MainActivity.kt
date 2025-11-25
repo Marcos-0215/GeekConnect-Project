@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -26,6 +27,7 @@ import com.marcosandre.geekconnect2.ui.nav.BottomNavItem
 import com.marcosandre.geekconnect2.ui.nav.MainNavHost
 import com.marcosandre.geekconnect2.ui.nav.Route
 import com.marcosandre.geekconnect2.ui.theme.GeekConnect2Theme
+import com.marcosandre.geekconnect2.viewmodel.ListsViewModel
 
 
 @Composable
@@ -34,7 +36,7 @@ fun getTopBarTitle(currentRoute: String?): String {
     return when (currentRoute) {
 
         // ROTAS TIPADAS (Kotlin Serialization)
-        Route.Home::class.qualifiedName -> "Home"
+        Route.Home::class.qualifiedName -> "GeekConnect"
         Route.Lists::class.qualifiedName -> "Listas"
         Route.Notifications::class.qualifiedName -> "Notificações"
         Route.Profile::class.qualifiedName -> "Perfil"
@@ -52,6 +54,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
+            val viewModel : ListsViewModel by viewModels()
 
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
@@ -97,7 +100,8 @@ class MainActivity : ComponentActivity() {
                     }
                 ) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        MainNavHost(navController = navController)
+                        MainNavHost(navController = navController,
+                            viewModel = viewModel)
                     }
                 }
             }
